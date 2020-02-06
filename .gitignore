@@ -10,3 +10,44 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+# newly added
+composer.lock.old
+/vendor_old
+/node_modules
+/public/hot
+/public/storage
+/public/css
+/public/js
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+#ignore test file I created for debug purpose test.html in public folder
+public/test.html
+testlog
+:memory
