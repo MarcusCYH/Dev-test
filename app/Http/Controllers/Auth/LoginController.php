@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Socialite;
+use App\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -56,20 +57,38 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('facebook')->user();
+        $userInfo = Socialite::driver('facebook')->user();
 
-        // $user->token;
+        // $userInfo->token;
 
         // OAuth Two Providers
-        $token = $user->token;
-        $refreshToken = $user->refreshToken; // not always provided
-        $expiresIn = $user->expiresIn;
+        $token = $userInfo->token;
+        $refreshToken = $userInfo->refreshToken; // not always provided
+        $expiresIn = $userInfo->expiresIn;
 
         // All Providers
-        $user->getId();
-        $user->getNickname();
-        $user->getName();
-        $user->getEmail();
-        $user->getAvatar();
+        $userInfo->getId();
+        $userInfo->getNickname();
+        $userInfo->getName();
+        $userInfo->getEmail();
+        $userInfo->getAvatar();
+
+
+        $user = User::where('provider_id', $userInfo->id)->first();
+
+        if(!$user)
+        {
+            $user = User::create([
+                'email' => $userInfo->getEmail(),
+                'name' => $userInfo->getName(),
+                'provider' => 'facebook',
+                'provider_id' => $userInfo->id
+            ]);
+        }
+
+        
+        auth()->login($user);
+
+        return redirect()->to('/home');
     }
 }
