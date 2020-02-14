@@ -16,3 +16,20 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['namespace' => 'Api'], function() {
+    Route::post('/validate_token', 'Auth\LoginController@validateToken')->name('api.validate_token');
+    Route::post('/register', 'Auth\RegisterController@register');
+    Route::post('/login/{provider}/provider_login', 'Auth\LoginController@providerLogin')->name('api.login.provider.provider_login');
+});
+
+Route::get('/test', function (){
+    $users = \App\User::all();
+    return \App\Http\Resources\UserResource::collection($users);
+});
+
+Route::get('/log-test', function (){
+    \Illuminate\Support\Facades\Log::info("TEst");
+
+    return '';
+});

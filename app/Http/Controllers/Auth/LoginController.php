@@ -7,6 +7,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -57,7 +58,9 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
+        \Illuminate\Support\Facades\Log::info("Facebook called back");
         $userInfo = Socialite::driver('facebook')->user();
+
 
         // $userInfo->token;
 
