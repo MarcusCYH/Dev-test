@@ -8,6 +8,9 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Laravel\Passport\Client;
 
 class RegisterController extends Controller
 {
@@ -30,6 +33,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    private $client;
 
     /**
      * Create a new controller instance.
@@ -39,7 +43,38 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+
+        $this->client = Client::find(2);
     }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function register(Request $request)
+    {
+        $payloads = $this->validator($request->all())->validate();
+
+        $user = $this->create($payloads);
+
+        $params = [
+            'grant_type' => 'password',
+            'client_id' => $this->client->id,
+            'client_secret' => $this->client->secret,
+            'username' => request('email'),
+            'password' => request('password'),
+            'scope' => '*'
+        ];
+
+        $request->request->add($params);
+
+        $proxy = Request::create('oauth/token', 'POST');
+
+        return Route::dispatch($proxy);
+
+    }
+    
 
     /**
      * Get a validator for an incoming registration request.

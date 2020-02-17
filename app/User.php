@@ -6,10 +6,11 @@ use App\Services\LoginProvider\Facebook;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +43,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function linked_social_accounts()
+    {
+        return $this->hasMany(LinkedSocialAccount::class);
+    }
+    
 
     /**
      * undocumented function

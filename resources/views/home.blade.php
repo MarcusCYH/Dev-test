@@ -15,6 +15,9 @@
                     @endif
 
                     You are logged in!
+
+                    <passport-clients></possport-clients>
+                    <passport-personal-access-tokens></passport-personal-access-tokens>
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@
         "egulias/email-validator": "^2.1",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
+        "laravel/passport": "^8.4",
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "larrymckuydee/artisan-command-extra": "^1.0",

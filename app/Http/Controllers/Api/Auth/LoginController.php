@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use Auth;
+use DB;
 use Socialite;
 use App\User;
 use App\Http\Resources\UserResource;
@@ -12,7 +14,9 @@ use App\Services\LoginProvider\Facebook;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Client;
+// use GuzzleHttp\Client as HttpClient;
 
 class LoginController extends Controller
 {
@@ -27,7 +31,8 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    //use IssueTokenTrait;
+    // use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -35,6 +40,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    private $client;
 
     /**
      * Create a new controller instance.
@@ -43,8 +49,83 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        // $this->middleware('guest')->except('logout');
+        $this->client = Client::find(2);
     }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        $params = [
+            'grant_type' => 'password',
+            'client_id' => $this->client->id,
+            'client_secret' => $this->client->secret,
+            'username' => request('username'),
+            'password' => request('password'),
+            'scope' => '*'
+        ];
+
+        $request->request->add($params);
+
+        $proxy = Request::create('oauth/token', 'POST');
+
+        return Route::dispatch($proxy);
+    }
+
+    /**
+     * Refresh token
+     *
+     * @return void
+     */
+    public function refresh(Request $request)
+    {
+        $this->validate($request, [
+            'refresh_token' => 'required'
+        ]);
+
+        $params = [
+            'grant_type' => 'refresh_token',
+            'client_id' => $this->client->id,
+            'client_secret' => $this->client->secret,
+            'username' => request('username'),
+            'password' => request('password'),
+        ];
+
+        $request->request->add($params);
+
+        $proxy = Request::create('oauth/token', 'POST');
+
+        return Route::dispatch($proxy);
+        
+    }
+    
+    /**
+     * Logout
+     *
+     * @return void
+     */
+    public function logout(Request $request)
+    {
+        $accessToken = Auth::guard('api')->user()->token();
+
+        // may soon change to revoke via event listening
+        DB::table('oauth_refresh_tokens')->where('access_token_id', $accessToken->id)->update(['revoked' => true]);
+
+        $accessToken->revoke();
+
+        return response()->json([], 204);
+    }
+    
+    
 
     /**
      * Get the needed authorization credentials from the request.
@@ -159,7 +240,7 @@ class LoginController extends Controller
                 // send token back to client
 
             } else {
-               return response()->json(['data' => ['errors' => ['message' => 'This is not a valid user']]]);
+               return response()->json(['data' => ['errors' => ['message' => 'This is not a valid user.']]]);
             }
             
         } else {

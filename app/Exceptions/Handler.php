@@ -60,6 +60,13 @@ class Handler extends ExceptionHandler
         //        ], 404);
         //    }
 
+        //    if ($exception instanceof ValidationException) {
+        //        return response()->json([
+        //            'message' => $exception->getMessage(),
+        //            'errors' => $exception->$validator->errors()
+        //        ], 422);
+        //    }
+
         //    if(config('app.debug'))
         //    {
         //         $response = [

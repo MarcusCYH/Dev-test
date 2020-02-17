@@ -20,7 +20,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api'], function() {
     Route::post('/validate_token', 'Auth\LoginController@validateToken')->name('api.validate_token');
     Route::post('/register', 'Auth\RegisterController@register');
+    Route::post('/login', 'Auth\LoginController@login');
+    Route::post('/refresh', 'Auth\LoginController@refresh');
+    //Route::post('/login', 'AuthController@login');
+    //Route::post('/register', 'AuthController@register');
     Route::post('/login/{provider}/provider_login', 'Auth\LoginController@providerLogin')->name('api.login.provider.provider_login');
+});
+
+Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function() {
+    Route::post('logout', 'Auth\LoginController@logout');
 });
 
 Route::get('/test', function (){
