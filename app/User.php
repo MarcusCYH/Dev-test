@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\LinkedSocialAccount;
 use App\Services\LoginProvider\Facebook;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;

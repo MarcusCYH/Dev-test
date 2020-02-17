@@ -161,6 +161,7 @@ class OAuthTest extends TestCase
             $this->transformHeadersToServerVars($headers),
             json_encode($payloads)
         );
+        dd($response);
         
         $accessToken = $response->decodeResponseJson()['access_token'];
 
@@ -440,5 +441,40 @@ class OAuthTest extends TestCase
         //expect unauthenticated
         dd($apiUserResponse);
     }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function testSocialAuth()
+    {
+        $headers = [
+            'Content-type' => 'application/json',
+            'Accept' => 'application/json'
+        ];
+
+        $payloads = [
+            'name' => 'Test',
+            'email' => 'test@test.my',
+            'provider' => 'google',
+            'provider_id' => '12312333gggg'
+        ];
+
+        $cookies = [];
+
+        $response = $this->call(
+            'POST',
+            'https://demo.local/api/social_auth',
+            [],
+            $cookies,
+            [],
+            $this->transformHeadersToServerVars($headers),
+            json_encode($payloads)
+        );
+
+        dd($response);
+    }
+    
     
 }

@@ -9,6 +9,7 @@ use App\User;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\LoginProviderRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Auth\IssueTokenTrait;
 use App\Providers\RouteServiceProvider;
 use App\Services\LoginProvider\Facebook;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -31,7 +32,7 @@ class LoginController extends Controller
     |
     */
 
-    //use IssueTokenTrait;
+    use IssueTokenTrait;
     // use AuthenticatesUsers;
 
     /**
@@ -65,20 +66,21 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        $params = [
-            'grant_type' => 'password',
-            'client_id' => $this->client->id,
-            'client_secret' => $this->client->secret,
-            'username' => request('username'),
-            'password' => request('password'),
-            'scope' => '*'
-        ];
+        return $this->issueToken($request, 'password');
+        // $params = [
+        //     'grant_type' => 'password',
+        //     'client_id' => $this->client->id,
+        //     'client_secret' => $this->client->secret,
+        //     'username' => request('username'),
+        //     'password' => request('password'),
+        //     'scope' => '*'
+        // ];
 
-        $request->request->add($params);
+        // $request->request->add($params);
 
-        $proxy = Request::create('oauth/token', 'POST');
+        // $proxy = Request::create('oauth/token', 'POST');
 
-        return Route::dispatch($proxy);
+        // return Route::dispatch($proxy);
     }
 
     /**
@@ -92,19 +94,20 @@ class LoginController extends Controller
             'refresh_token' => 'required'
         ]);
 
-        $params = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $this->client->id,
-            'client_secret' => $this->client->secret,
-            'username' => request('username'),
-            'password' => request('password'),
-        ];
+        return $this->issueToken($request, 'refresh_token');
+        // $params = [
+        //     'grant_type' => 'refresh_token',
+        //     'client_id' => $this->client->id,
+        //     'client_secret' => $this->client->secret,
+        //     'username' => request('username'),
+        //     'password' => request('password'),
+        // ];
 
-        $request->request->add($params);
+        // $request->request->add($params);
 
-        $proxy = Request::create('oauth/token', 'POST');
+        // $proxy = Request::create('oauth/token', 'POST');
 
-        return Route::dispatch($proxy);
+        // return Route::dispatch($proxy);
         
     }
     

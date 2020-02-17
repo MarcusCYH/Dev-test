@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Auth\IssueTokenTrait;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -25,7 +26,8 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use IssueTokenTrait;
+    // use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -58,20 +60,21 @@ class RegisterController extends Controller
 
         $user = $this->create($payloads);
 
-        $params = [
-            'grant_type' => 'password',
-            'client_id' => $this->client->id,
-            'client_secret' => $this->client->secret,
-            'username' => request('email'),
-            'password' => request('password'),
-            'scope' => '*'
-        ];
+        return $this->issueToken($request, 'password');
+        // $params = [
+        //     'grant_type' => 'password',
+        //     'client_id' => $this->client->id,
+        //     'client_secret' => $this->client->secret,
+        //     'username' => request('email'),
+        //     'password' => request('password'),
+        //     'scope' => '*'
+        // ];
 
-        $request->request->add($params);
+        // $request->request->add($params);
 
-        $proxy = Request::create('oauth/token', 'POST');
+        // $proxy = Request::create('oauth/token', 'POST');
 
-        return Route::dispatch($proxy);
+        // return Route::dispatch($proxy);
 
     }
     
