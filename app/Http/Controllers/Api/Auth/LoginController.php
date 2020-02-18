@@ -11,13 +11,11 @@ use App\Http\Requests\LoginProviderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\Auth\IssueTokenTrait;
 use App\Providers\RouteServiceProvider;
-use App\Services\LoginProvider\Facebook;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
-// use GuzzleHttp\Client as HttpClient;
 
 class LoginController extends Controller
 {
@@ -67,20 +65,6 @@ class LoginController extends Controller
         ]);
 
         return $this->issueToken($request, 'password');
-        // $params = [
-        //     'grant_type' => 'password',
-        //     'client_id' => $this->client->id,
-        //     'client_secret' => $this->client->secret,
-        //     'username' => request('username'),
-        //     'password' => request('password'),
-        //     'scope' => '*'
-        // ];
-
-        // $request->request->add($params);
-
-        // $proxy = Request::create('oauth/token', 'POST');
-
-        // return Route::dispatch($proxy);
     }
 
     /**
@@ -95,19 +79,6 @@ class LoginController extends Controller
         ]);
 
         return $this->issueToken($request, 'refresh_token');
-        // $params = [
-        //     'grant_type' => 'refresh_token',
-        //     'client_id' => $this->client->id,
-        //     'client_secret' => $this->client->secret,
-        //     'username' => request('username'),
-        //     'password' => request('password'),
-        // ];
-
-        // $request->request->add($params);
-
-        // $proxy = Request::create('oauth/token', 'POST');
-
-        // return Route::dispatch($proxy);
         
     }
     
@@ -192,77 +163,6 @@ class LoginController extends Controller
         auth()->login($user);
 
         return redirect()->to('/home');
-    }
-
-    /**
-     * validate token
-     *
-     * @return void
-     */
-    public function validateToken(LoginProviderRequest $request)
-    {
-        $user = User::where('email', $request->email)
-                    ->orWhere('mobile_no', $request->mobile_no)
-                    ->first();
-
-        if ($user)
-        {
-            $user->validateToken($request->token);
-        } 
-
-        return new UserResource($user);
-        
-    }
-
-    /**
-     * undocumented function
-     *
-     * @return void
-     */
-    public function providerLogin(LoginProviderRequest $request)
-    {
-        $user = User::where('email', $request->email)
-                    ->orWhere('mobile_no', $request->mobile_no)
-                    ->where('provider', $request->provider)
-                    ->where('provider_id', $request->provider_id)
-                    ->get();
-
-        if ($user->count() > 2) throw Exception('duplicate record');
-
-        $validatedToken = Facebook::validateToken($request->provider_token);
-        return response()->json($validatedToken);
-        if (collect($validatedToken->data)->has('error')) return response()->json($validatedToken, 422);
-
-        // check if user exist if not create user
-        if($user)
-        {
-            $validProvider = $user->validateProvider($validatedToken->data->user_id, $validatedToken->data->app_id);
-            
-            if ($validProvider) {
-                // generate internal token
-                // send token back to client
-
-            } else {
-               return response()->json(['data' => ['errors' => ['message' => 'This is not a valid user.']]]);
-            }
-            
-        } else {
-            // validate fb token
-
-
-            $payloads = $request->only([
-                'name',
-                'email',
-                'mobile_no',
-                'provider_id'
-            ]);
-
-            $payloads = Arr::add($payloads, 'provider', $request->provider);
-
-            $user = User::create($payloads);
-        }
-        
-        return new UserResource($user);
     }
     
 }

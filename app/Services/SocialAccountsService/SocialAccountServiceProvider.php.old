@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Services\SocialAccountsService;
+
+use App\Services\SocialAccountsService\SocialAccountContract;
+use App\Services\SocialAccountsService\Facebook;
+use Illuminate\Http\Request;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
+
+/**
+ * Class Provider
+ * @author Larry Mckuydee
+ */
+class SocialAccountServiceProvider extends ServiceProvider
+{
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind(SocialAccountContract::class, function($app) {
+            return new Facebook();
+        });
+
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+}

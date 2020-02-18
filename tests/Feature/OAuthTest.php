@@ -455,10 +455,12 @@ class OAuthTest extends TestCase
         ];
 
         $payloads = [
-            'name' => 'Test',
-            'email' => 'test@test.my',
-            'provider' => 'google',
-            'provider_id' => '12312333gggg'
+            'name' => 'Larry Mckuydee',
+            'email' => 'ahloongdotcom@yahoo.com',
+            'provider' => 'facebook',
+            // 'provider_id' => '12312333gggg',
+            'provider_id' => 'please-insert-valid-provider-id',
+            'provider_user_access_token' => 'please-insert-valid-token'
         ];
 
         $cookies = [];

@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SocialAuthServiceProvider::class,
+        App\Providers\SocialAccountServiceProvider::class,
 
         Propaganistas\LaravelPhone\PhoneServiceProvider::class,
 
