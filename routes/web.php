@@ -21,9 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('admin.login');
-Route::post('/admin/login', 'Auth\LoginController@adminLogin');
-Route::group(['middleware' => ['auth:admin']], function() {
-    Route::view('/admin', 'admin');
-});
+// comment off currently because using adminarchitect
+// Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('admin.login');
+// Route::post('/admin/login', 'Auth\LoginController@adminLogin');
+// Route::group(['middleware' => ['auth:admin']], function() {
+//     Route::view('/admin', 'admin');
+// });
 
