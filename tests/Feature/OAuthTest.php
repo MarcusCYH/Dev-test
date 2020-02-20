@@ -11,6 +11,17 @@ use Tests\TestCase;
 class OAuthTest extends TestCase
 {
     /**
+     * Currently Mark this as incomplete since I use it as development purpose only
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        $this->markTestSkipped();
+    }
+    
+
+    /**
      * A basic feature test example.
      *
      * @return void
