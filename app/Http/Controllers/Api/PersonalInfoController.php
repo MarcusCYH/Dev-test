@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use Auth;
 use App\PersonalInfo;
-use App\Http\Resources\PersonalInfo as PersonalInfoResource;
+use App\Http\Resources\PersonalInfoResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -16,9 +17,9 @@ class PersonalInfoController extends Controller
      */
     public function index()
     {
-        return PersonalInfoResource::collection(
-            PersonalInfoController::paginate(5)
-        );
+        //return PersonalInfoResource::collection(
+        //    PersonalInfo::paginate(5)
+        //);
     }
 
     /**
@@ -31,7 +32,9 @@ class PersonalInfoController extends Controller
     {
         $payload = $this->validatedPayload($request);
 
-        $personalInfo = PersonalInfo::create($payload);
+        $personalInfo = Auth::guard('api')->user()->personal_info()->firstOrCreate($payload);
+
+        //$personalInfo = PersonalInfo::create($payload);
 
         return new PersonalInfoResource($personalInfo);
     }
@@ -44,7 +47,7 @@ class PersonalInfoController extends Controller
      */
     public function show(PersonalInfo $personalInfo)
     {
-        return new PersonalInfoResource($personalInfo);
+        return new PersonalInfoResource(Auth::guard('api')->user()->personal_info);
     }
 
     /**
@@ -69,6 +72,7 @@ class PersonalInfoController extends Controller
     {
         $payload = $this->validatedPayload($request);
 
+        $personalInfo = Auth::guard('api')->user()->personal_info;
 
         $personalInfo->update($payload);
 
@@ -96,15 +100,15 @@ class PersonalInfoController extends Controller
     public function validatedPayload(Request $request)
     {
         return $request->validate([
-            'nric' => 'required|string',
-            'date_of_birth' => 'required|date',
-            'nric_front_copy' => 'required|string',
-            'mobile_no' => 'required|string',
-            'gender' => 'required|integer',
-            'nationality' => 'required|string',
-            'religion_id' => 'required|integer',
-            'occupation' => 'required|string',
-            'marital_status' => 'required|integer',
+            'nric' => 'nullable|string',
+            'date_of_birth' => 'nullable|date',
+            'nric_front_copy' => 'nullable|string',
+            'mobile_no' => 'nullable|string',
+            'gender' => 'nullable|integer',
+            'nationality' => 'nullable|string',
+            'religion_id' => 'nullable|integer',
+            'occupation' => 'nullable|string',
+            'marital_status' => 'nullable|integer',
             
         ]);
     }

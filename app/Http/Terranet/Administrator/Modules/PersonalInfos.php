@@ -58,7 +58,9 @@ class PersonalInfos extends Scaffolding implements Navigable, Filtrable, Editabl
         $personalInfoScaffoldRules = $this->scaffoldRules();
 
         return array_merge($personalInfoScaffoldRules, [
-            'user_id' => 'nullable'
+            'user_id' => 'nullable',
+            'gender' => 'nullable|string',
+            'marital_status' => 'nullable|string'
         ]);
     }
     
