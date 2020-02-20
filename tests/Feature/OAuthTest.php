@@ -18,6 +18,7 @@ class OAuthTest extends TestCase
     public function setUp(): void
     {
         $this->markTestSkipped();
+        parent::setUp();
     }
     
 
