@@ -4,26 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea8d5f7a829b5541be0e02e24d526f63",
+    "content-hash": "b75e4f867653b77032c600cd27a7b19c",
     "packages": [
         {
             "name": "adminarchitect/core",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flexi2pay/core.git",
-                "reference": "731ee2a429fdee1483d7fb26c0f3310c8e5befaf"
+                "reference": "b7b2c4d0497d6ba9f2fef248f0a79eedd383da7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flexi2pay/core/zipball/731ee2a429fdee1483d7fb26c0f3310c8e5befaf",
-                "reference": "731ee2a429fdee1483d7fb26c0f3310c8e5befaf",
+                "url": "https://api.github.com/repos/flexi2pay/core/zipball/b7b2c4d0497d6ba9f2fef248f0a79eedd383da7e",
+                "reference": "b7b2c4d0497d6ba9f2fef248f0a79eedd383da7e",
                 "shasum": ""
             },
             "require": {
                 "davejamesmiller/laravel-breadcrumbs": "5.2|5.3",
                 "doctrine/annotations": "^1.6",
-                "doctrine/dbal": "2.9.*",
+                "doctrine/dbal": "^2.9.1",
                 "ext-dom": "*",
                 "ext-json": "*",
                 "laravelcollective/html": "5.*|dev-master",
@@ -76,9 +76,9 @@
             ],
             "description": "Active Admin for Laravel.",
             "support": {
-                "source": "https://github.com/flexi2pay/core/tree/v2.0.0"
+                "source": "https://github.com/flexi2pay/core/tree/2.0"
             },
-            "time": "2019-09-23T10:59:13+00:00"
+            "time": "2020-02-20T07:59:12+00:00"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -387,31 +387,30 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.9.3",
+            "version": "v2.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "7345cd59edfa2036eb0fa4264b77ae2576842035"
+                "reference": "c2b8e6e82732a64ecde1cddf9e1e06cb8556e3d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/7345cd59edfa2036eb0fa4264b77ae2576842035",
-                "reference": "7345cd59edfa2036eb0fa4264b77ae2576842035",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c2b8e6e82732a64ecde1cddf9e1e06cb8556e3d8",
+                "reference": "c2b8e6e82732a64ecde1cddf9e1e06cb8556e3d8",
                 "shasum": ""
             },
             "require": {
                 "doctrine/cache": "^1.0",
                 "doctrine/event-manager": "^1.0",
                 "ext-pdo": "*",
-                "php": "^7.1"
+                "php": "^7.2"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^5.0",
-                "jetbrains/phpstorm-stubs": "^2018.1.2",
-                "phpstan/phpstan": "^0.10.1",
-                "phpunit/phpunit": "^7.4",
-                "symfony/console": "^2.0.5|^3.0|^4.0",
-                "symfony/phpunit-bridge": "^3.4.5|^4.0.5"
+                "doctrine/coding-standard": "^6.0",
+                "jetbrains/phpstorm-stubs": "^2019.1",
+                "phpstan/phpstan": "^0.11.3",
+                "phpunit/phpunit": "^8.4.1",
+                "symfony/console": "^2.0.5|^3.0|^4.0|^5.0"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -422,7 +421,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.9.x-dev",
+                    "dev-master": "2.10.x-dev",
                     "dev-develop": "3.0.x-dev"
                 }
             },
@@ -458,14 +457,25 @@
             "keywords": [
                 "abstraction",
                 "database",
+                "db2",
                 "dbal",
+                "mariadb",
+                "mssql",
                 "mysql",
-                "persistence",
+                "oci8",
+                "oracle",
+                "pdo",
                 "pgsql",
-                "php",
-                "queryobject"
+                "postgresql",
+                "queryobject",
+                "sasql",
+                "sql",
+                "sqlanywhere",
+                "sqlite",
+                "sqlserver",
+                "sqlsrv"
             ],
-            "time": "2019-11-02T22:19:34+00:00"
+            "time": "2020-01-04T12:56:21+00:00"
         },
         {
             "name": "doctrine/event-manager",

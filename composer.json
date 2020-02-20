@@ -17,7 +17,7 @@
         "laravel/tinker": "^2.0",
         "larrymckuydee/artisan-command-extra": "^1.0",
         "propaganistas/laravel-phone": "^4.2",
-        "adminarchitect/core": "2.0"
+        "adminarchitect/core": "2.0.1"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
