@@ -16,7 +16,8 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "larrymckuydee/artisan-command-extra": "^1.0",
-        "propaganistas/laravel-phone": "^4.2"
+        "propaganistas/laravel-phone": "^4.2",
+        "adminarchitect/core": "2.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -26,6 +27,10 @@
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"
     },
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/flexi2pay/core.git"
+    }],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",

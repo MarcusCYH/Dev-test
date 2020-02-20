@@ -178,6 +178,7 @@ return [
         App\Providers\SocialAccountServiceProvider::class,
 
         Propaganistas\LaravelPhone\PhoneServiceProvider::class,
+        Terranet\Administrator\ServiceProvider::class,
 
     ],
 

@@ -30,6 +30,10 @@ Route::group(['namespace' => 'Api'], function() {
 
 Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function() {
     Route::post('logout', 'Auth\LoginController@logout');
+    //Route::apiResource('personal_infos', 'PersonalInfoController')->only(['store', 'update', 'show']);
+    Route::get('personal_info', 'PersonalInfoController@show')->name('personal_info.show');
+    Route::post('personal_info', 'PersonalInfoController@store')->name('personal_info.store');
+    Route::match(['put', 'patch'], 'personal_info', 'PersonalInfoController@update')->name('personal_info.update');
 });
 
 Route::get('/test', function (){

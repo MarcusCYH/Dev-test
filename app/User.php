@@ -3,6 +3,7 @@
 namespace App;
 
 use App\LinkedSocialAccount;
+use App\PersonalInfo;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,5 +54,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(LinkedSocialAccount::class);
     }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function personal_info()
+    {
+        return $this->hasOne(PersonalInfo::class);
+    }
+    
     
 }
