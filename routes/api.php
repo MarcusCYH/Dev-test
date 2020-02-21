@@ -25,7 +25,6 @@ Route::group(['namespace' => 'Api'], function() {
     Route::post('/social_auth', 'Auth\SocialAuthController@socialAuth');
     //Route::post('/login', 'AuthController@login');
     //Route::post('/register', 'AuthController@register');
-    Route::post('/login/{provider}/provider_login', 'Auth\LoginController@providerLogin')->name('api.login.provider.provider_login');
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function() {
