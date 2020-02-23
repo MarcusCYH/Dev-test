@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class PersonalInfoTest extends TestCase
@@ -96,6 +97,7 @@ class PersonalInfoTest extends TestCase
             'gender' => 1,
             'nric' => '919191919191',
             'nationality' => 'MY',
+            'nric_front_copy' => UploadedFile::fake()->image('ic_photo.jpg')
         ];
 
         $cookies = [];
@@ -105,7 +107,7 @@ class PersonalInfoTest extends TestCase
             'https://demo.local/api/personal_info',
             [],
             $cookies,
-            [],
+            $this->extractFilesFromDataArray($payloads),
             $this->transformHeadersToServerVars($headers),
             json_encode($payloads)
         );
@@ -143,6 +145,7 @@ class PersonalInfoTest extends TestCase
             'gender' => 1,
             'nric' => '919191919191',
             'nationality' => 'MY',
+            'nric_front_copy' => UploadedFile::fake()->image('ic_photo.jpg')
         ];
 
         $cookies = [];
@@ -152,7 +155,7 @@ class PersonalInfoTest extends TestCase
             'https://demo.local/api/personal_info',
             [],
             $cookies,
-            [],
+            $this->extractFilesFromDataArray($payloads),
             $this->transformHeadersToServerVars($headers),
             json_encode($payloads)
         );

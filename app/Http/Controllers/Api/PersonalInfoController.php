@@ -10,17 +10,6 @@ use Illuminate\Http\Request;
 
 class PersonalInfoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //return PersonalInfoResource::collection(
-        //    PersonalInfo::paginate(5)
-        //);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -31,6 +20,12 @@ class PersonalInfoController extends Controller
     public function store(Request $request)
     {
         $payload = $this->validatedPayload($request);
+
+        if ($request->hasFile('nric_front_copy')) {
+            $file = $request->file('nric_front_copy');
+            $url = $file->store('attachments/personal_infos', 's3');
+            $payload['nric_front_copy'] = $url;
+        }
 
         $personalInfo = Auth::guard('api')->user()->personal_info()->firstOrCreate($payload);
 
@@ -51,17 +46,6 @@ class PersonalInfoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\PersonalInfo  $personalInfo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PersonalInfo $personalInfo)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -71,6 +55,12 @@ class PersonalInfoController extends Controller
     public function update(Request $request, PersonalInfo $personalInfo)
     {
         $payload = $this->validatedPayload($request);
+
+        if ($request->hasFile('nric_front_copy')) {
+            $file = $request->file('nric_front_copy');
+            $url = $file->store('attachments/personal_infos', 's3');
+            $payload['nric_front_copy'] = $url;
+        }
 
         $personalInfo = Auth::guard('api')->user()->personal_info;
 
@@ -100,9 +90,10 @@ class PersonalInfoController extends Controller
     public function validatedPayload(Request $request)
     {
         return $request->validate([
+            'name' => 'nullable|string',
             'nric' => 'nullable|string',
             'date_of_birth' => 'nullable|date',
-            'nric_front_copy' => 'nullable|string',
+            'nric_front_copy' => 'nullable|image',
             'mobile_no' => 'nullable|string',
             'gender' => 'nullable|integer',
             'nationality' => 'nullable|string',
@@ -112,5 +103,4 @@ class PersonalInfoController extends Controller
             
         ]);
     }
-        
 }

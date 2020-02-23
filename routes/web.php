@@ -21,6 +21,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 
+Route::get('/envtest', function (){
+    return env('AWS_BUCKET');
+});
+
+Route::get('/upload-page', function() {
+    return view('upload_page');
+});
+
 // comment off currently because using adminarchitect
 // Route::get('/admin/login', 'Auth\LoginController@showAdminLoginForm')->name('admin.login');
 // Route::post('/admin/login', 'Auth\LoginController@adminLogin');
