@@ -22,6 +22,8 @@ class UploadController extends Controller
             'file' => 'required',
             'file_name' => 'nullable|string'
         ]);
+
+        \Illuminate\Support\Facades\Log::debug($request);
         
         if ($request->hasFile('file')) {
             $file = $request->file('file');
